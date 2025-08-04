@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recette - Your Complete Food & Health Companion</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <link rel="stylesheet" href="Recette1.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        body.dark-mode .header {
+            background: rgba(30, 30, 30, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-nav {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 21px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .main-nav a {
+            color: #f0f0f0;
+        }
+
+        .main-nav a:hover, .main-nav a:focus {
+            color: white;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        body.dark-mode .search-container {
+            background: #333;
+        }
+
+        .search-input {
+            border: none;
+            padding: 0.75rem 1.5rem;
+            outline: none;
+            width: 300px;
+            background: transparent;
+        }
+
+        body.dark-mode .search-input {
+            color: #f0f0f0;
+        }
+
+        .search-input::placeholder {
+            color: #666;
+        }
+
+        body.dark-mode .search-input::placeholder {
+            color: #ccc;
+        }
+
+        .search-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(45deg, #764ba2, #667eea);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Language buttons */
+        .language-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            background: #764ba2;
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn:hover {
+            background: #5a3278;
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            background: #333;
+        }
+
+        /* Feature Tabs */
+        .feature-tabs {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 1rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .tab-content {
+            background: rgba(30, 30, 30, 0.95);
+            color: #f0f0f0;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dietary Filters */
+        .dietary-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: rgba(118, 75, 162, 0.2);
+            color: #764ba2;
+            border: 2px solid #764ba2;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #764ba2;
+            color: white;
+        }
+
+        /* Recipe Grid */
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        body.dark-mode .recipe-card {
+            background: #2a2a2a;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .recipe-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .recipe-info {
+            padding: 1.5rem;
+        }
+
+        .recipe-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #764ba2;
+        }
+
+        body.dark-mode .recipe-title {
+            color: #9575cd;
+        }
+
+        .recipe-meta {
+            display: flex;
+            gap: 1rem;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        body.dark-mode .recipe-meta {
+            color: #ccc;
+        }
+
+        .dietary-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .tag.vegetarian { background: #e8f5e8; color: #2e7d32; }
+        .tag.vegan { background: #fff3e0; color: #f57c00; }
+        .tag.gluten-free { background: #fce4ec; color: #c2185b; }
+        .tag.dairy-free { background: #e3f2fd; color: #1976d2; }
+
+        /* Calculator Styles */
+        .calculator-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .calc-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .calc-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .calc-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Water Tracker */
+        .water-tracker {
+            text-align: center;
+        }
+
+        .water-visual {
+            width: 200px;
+            height: 300px;
+            margin: 2rem auto;
+            position: relative;
+            background: linear-gradient(to top, #E3F2FD 0%, #E3F2FD 100%);
+            border-radius: 100px;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            border: 4px solid #2196F3;
+        }
+
+        .water-level {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, #01579B, #0288D1);
+            transition: height 0.5s ease;
+            border-radius: 0 0 100px 100px;
+        }
+
+        .water-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .water-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .water-btn:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        /* Achievement notification */
+        .achievement {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .achievement.show {
+            transform: translateX(0);
+        }
+
+        /* Meal Planner */
+        .meal-planner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .day-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .meal-input {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Shopping List */
+        .shopping-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .shopping-input-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .shopping-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        body.dark-mode .shopping-input {
+            background: #333;
+            color: #f0f0f0;
+            border-color: #555;
+        }
+
+        .add-item-btn {
+            padding: 1rem 2rem;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .add-item-btn:hover {
+            background: #5a3278;
+        }
+
+        .shopping-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .shopping-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .shopping-item {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .shopping-item.checked {
+            opacity: 0.6;
+            text-decoration: line-through;
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        .delete-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #d32f2f;
+        }
+
+        /* Nutrition Info */
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .nutrition-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .nutrition-card:hover {
+            transform: scale(1.05);
+        }
+
+        .nutrition-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Search Results */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        body.dark-mode .search-results {
+            background: #333;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        body.dark-mode .search-result-item {
+            border-bottom-color: #555;
+        }
+
+        .search-result-item:hover {
+            background: #f5f5f5;
+        }
+
+        body.dark-mode .search-result-item:hover {
+            background: #444;
+        }
+
+        /* Loading states */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(118, 75, 162, 0.3);
+            border-radius: 50%;
+            border-top-color: #764ba2;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error and success messages */
+        .message {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef5350;
+        }
+
+        .success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .footer a {
+            color: #80cbc4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #b2dfdb;
+        }
+
+        .disclaimer {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            color: #f57c00;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .disclaimer {
+            background: rgba(255, 193, 7, 0.2);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .main-nav {
+                justify-content: center;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .calculator-container {
+                grid-template-columns: 1fr;
+            }
+
+            .recipe-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .water-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .language-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .tab-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .search-input {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Achievement notification -->
+    <div id="achievement" class="achievement">
+        <span id="achievementText"></span>
+    </div>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo" role="banner">🍽️ Recette</div>
+            <nav role="navigation" aria-label="Main navigation">
+                <ul class="main-nav">
+                    <li><a href="#recipes" aria-describedby="recipes-desc">Recipes</a></li>
+                    <li><a href="#calculator" aria-describedby="calculator-desc">Health Tools</a></li>
+                    <li><a href="#planner" aria-describedby="planner-desc">Meal Plan</a></li>
+                    <li><a href="#nutrition" aria-describedby="nutrition-desc">Nutrition</a></li>
+                </ul>
+            </nav>
+            <div class="search-container">
+                <input type="text" 
+                       class="search-input" 
+                       placeholder="Search recipes..." 
+                       id="searchInput"
+                       aria-label="Search recipes"
+                       autocomplete="off">
+                <button class="search-btn" onclick="performSearch()" aria-label="Search">🔍</button>
+                <div id="searchResults" class="search-results"></div>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+            <div class="language-buttons">
+                <a href="#" class="lang-btn active" onclick="setLanguage('en')">English</a>
+                <a href="#" class="lang-btn" onclick="setLanguage('fr')">Français</a>
+                <a href="#" class="lang-btn" onclick="setLanguage('ja')">日本語</a>
+                <a href="#" class="lang-btn" onclick="setLanguage('te')">Telugu</a>
+                <a href="#" class="lang-btn" onclick="setLanguage('es')">Español</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Screen reader descriptions -->
+        <div class="sr-only">
+            <div id="recipes-desc">Browse our collection of delicious recipes</div>
+            <div id="calculator-desc">Calculate your daily calorie needs and BMI</div>
+            <div id="planner-desc">Plan your weekly meals</div>
+            <div id="nutrition-desc">Learn about vitamins and minerals</div>
+        </div>
+
+        <div class="feature-tabs">
+            <div class="tab-buttons" role="tablist">
+                <button class="tab-btn active" onclick="showTab('recipes')" role="tab" aria-selected="true" aria-controls="recipes">🍳 Recipes</button>
+                <button class="tab-btn" onclick="showTab('calculator')" role="tab" aria-selected="false" aria-controls="calculator">📊 Calorie Calculator</button>
+                <button class="tab-btn" onclick="showTab('planner')" role="tab" aria-selected="false" aria-controls="planner">📅 Meal Planner</button>
+                <button class="tab-btn" onclick="showTab('water')" role="tab" aria-selected="false" aria-controls="water">💧 Water Tracker</button>
+                <button class="tab-btn" onclick="showTab('shopping')" role="tab" aria-selected="false" aria-controls="shopping">🛒 Shopping List</button>
+                <button class="tab-btn" onclick="showTab('nutrition')" role="tab" aria-selected="false" aria-controls="nutrition">🥗 Nutrition Info</button>
+            </div>
+
+            <!-- Recipes Tab -->
+            <div id="recipes" class="tab-content active" role="tabpanel">
+                <h2>🌟 Featured Recipes</h2>
+                
+                <!-- Dietary Filters -->
+                <div class="dietary-filters">
+                    <button class="filter-btn active" onclick="filterRecipes('all')">All</button>
+                    <button class="filter-btn" onclick="filterRecipes('vegetarian')">🥬 Vegetarian</button>
+                    <button class="filter-btn" onclick="filterRecipes('vegan')">🌱 Vegan</button>
+                    <button class="filter-btn" onclick="filterRecipes('gluten-free')">🌾 Gluten-Free</button>
+                    <button class="filter-btn" onclick="filterRecipes('dairy-free')">🥛 Dairy-Free</button>
+                </div>
+
+                <div class="recipe-grid" id="recipeGrid">
+                    <!-- Recipes will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Calculator Tab -->
+            <div id="calculator" class="tab-content" role="tabpanel">
+                <h2>📊 Health & Fitness Calculator</h2>
+                
+                <div class="disclaimer">
+                    ⚠️ <strong>Medical Disclaimer:</strong> These calculations are for informational purposes only and should not replace professional medical advice. Please consult with a healthcare provider for personalized recommendations.
+                </div>
+
+                <div class="calculator-container">
+                    <div class="calc-section">
+                        <h3>🔥 Daily Calorie Needs</h3>
+                        <div class="form-group">
+                            <label for="age">Age:</label>
+                            <input type="number" id="age" placeholder="Enter your age" min="1" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <select id="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg):</label>
+                            <input type="number" id="weight" placeholder="Enter weight" min="1" max="500" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm):</label>
+                            <input type="number" id="height" placeholder="Enter height" min="50" max="300" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="activity">Activity Level:</label>
+                            <select id="activity" required>
+                                <option value="">Select activity level</option>
+                                <option value="1.2">Sedentary (little/no exercise)</option>
+                                <option value="1.375">Light Activity (light exercise 1-3 days/week)</option>
+                                <option value="1.55">Moderate Activity (moderate exercise 3-5 days/week)</option>
+                                <option value="1.725">Very Active (hard exercise 6-7 days/week)</option>
+                                <option value="1.9">Extremely Active (very hard exercise, physical job)</option>
+                            </select>
+                        </div>
+                        <button class="calc-btn" onclick="calculateCalories()">Calculate Calories</button>
+                        <div id="calorieResult" class="result"></div>
+                    </div>
+
+                    <div class="calc-section">
+                        <h3>📏 BMI Calculator</h3>
+                        <div class="form-group">
+                            <label for="bmiWeight">Weight (kg):</label>
+                            <input type="number" id="bmiWeight" placeholder="Enter weight" min="1" max="500" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bmiHeight">Height(cm):</label>
+                            <input type="number" id="bmiHeight" placeholder="Enter height" min="50" max="300" required>
+                        </div>
+                        <button class="calc-btn" onclick="calculateBMI()">Calculate BMI</button>
+                        <div id="bmiResult" class="result"></div>
+                    </div>
+
+                    <div class="calc-section">
+                        <h3>💧 Water Intake Calculator</h3>
+                        <div class="form-group">
+                            <label for="waterWeight">Weight (kg):</label>
+                            <input type="number" id="waterWeight" placeholder="Enter weight" min="1" max="500" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="activityTime">Exercise Time (minutes/day):</label>
+                            <input type="number" id="activityTime" placeholder="Exercise minutes" min="0" max="480" value="0">
+                        </div>
+                        <button class="calc-btn" onclick="calculateWater()">Calculate Water Needs</button>
+                        <div id="waterResult" class="result"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meal Planner Tab -->
+            <div id="planner" class="tab-content" role="tabpanel">
+                <h2>📅 Weekly Meal Planner</h2>
+                <div class="meal-planner">
+                    <div class="day-card">
+                        <h3>Monday</h3>
+                        <input type="text" class="meal-input" placeholder="Breakfast" data-day="monday" data-meal="breakfast">
+                        <input type="text" class="meal-input" placeholder="Lunch" data-day="monday" data-meal="lunch">
+                        <input type="text" class="meal-input" placeholder="Dinner" data-day="monday" data-meal="dinner">
+                    </div>
+                    <div class="day-card">
+                        <h3>Tuesday</h3>
+                        <input type="text" class="meal-input" placeholder="Breakfast" data-day="tuesday" data-meal="breakfast">
+                        <input type="text" class="meal-input" placeholder="Lunch" data-day="tuesday" data-meal="lunch">
+                        <input type="text" class="meal-input" placeholder="Dinner" data-day="tuesday" data-meal="dinner">
+                    </div>
+                    <div class="day-card">
+                        <h3>Wednesday</h3>
+                        <input type="text" class="meal-input" placeholder="Breakfast" data-day="wednesday" data-meal="breakfast">
+                        <input type="text" class="meal-input" placeholder="Lunch" data-day="wednesday" data-meal="lunch">
+                        <input type="text" class="meal-input" placeholder="Dinner" data-day="wednesday" data-meal="dinner">
+                    </div>
+                    <div class="day-card">
+                        <h3>Thursday</h3>
+                        <input type="text" class="meal-input" placeholder="Breakfast" data-day="thursday" data-meal="breakfast">
+                        <input type="text" class="meal-input" placeholder="Lunch" data-day="thursday" data-meal="lunch">
+                        <input type="text" class="meal-input" placeholder="Dinner" data-day="thursday" data-meal="dinner">
+                    </div>
+                    <div class="day-card">
+                        <h3>Friday</h3>
+                        <input type="text" class="meal-input" placeholder="Breakfast" data-day="friday" data-meal="breakfast">
+                        <input type="text" class="meal-input" placeholder="Lunch" data-day="friday" data-meal="lunch">
+                        <input type="text" class="meal-input" placeholder="Dinner" data-day="friday" data-meal="dinner">
+                    </div>
+                    <div class="day-card">
+                        <h3>Saturday</h3>
+                        <input type="text" class="meal-input" placeholder="Breakfast" data-day="saturday" data-meal="breakfast">
+                        <input type="text" class="meal-input" placeholder="Lunch" data-day="saturday" data-meal="lunch">
+                        <input type="text" class="meal-input" placeholder="Dinner" data-day="saturday" data-meal="dinner">
+                    </div>
+                    <div class="day-card">
+                        <h3>Sunday</h3>
+                        <input type="text" class="meal-input" placeholder="Breakfast" data-day="sunday" data-meal="breakfast">
+                        <input type="text" class="meal-input" placeholder="Lunch" data-day="sunday" data-meal="lunch">
+                        <input type="text" class="meal-input" placeholder="Dinner" data-day="sunday" data-meal="dinner">
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="calc-btn" onclick="saveMealPlan()" style="width: auto; padding: 1rem 2rem;">💾 Save Meal Plan</button>
+                    <button class="calc-btn" onclick="clearMealPlan()" style="width: auto; padding: 1rem 2rem; margin-left: 1rem;">🗑️ Clear All</button>
+                </div>
+            </div>
+
+            <!-- Water Tracker Tab -->
+            <div id="water" class="tab-content" role="tabpanel">
+                <h2>💧 Daily Water Tracker</h2>
+                <div class="water-tracker">
+                    <div class="water-visual">
+                        <div class="water-level" id="waterLevel"></div>
+                    </div>
+                    <p>Daily Goal: <span id="waterGoal">2000ml</span></p>
+                    <p>Current: <span id="waterCurrent">0ml</span> (<span id="waterPercent">0%</span>)</p>
+                    
+                    <div class="water-controls">
+                        <button class="water-btn" onclick="addWater(250)">+250ml Glass</button>
+                        <button class="water-btn" onclick="addWater(500)">+500ml Bottle</button>
+                        <button class="water-btn" onclick="addWater(1000)">+1L Bottle</button>
+                        <button class="water-btn" onclick="resetWater()">Reset Day</button>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <label for="customWater">Custom Amount (ml):</label><br>
+                        <input type="number" id="customWater" min="1" max="2000" placeholder="Enter amount" style="padding: 0.5rem; margin: 0.5rem; border-radius: 5px; border: 1px solid #ccc;">
+                        <button class="water-btn" onclick="addCustomWater()">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shopping List Tab -->
+            <div id="shopping" class="tab-content" role="tabpanel">
+                <h2>🛒 Smart Shopping List</h2>
+                <div class="shopping-container">
+                    <div class="shopping-input-container">
+                        <input type="text" 
+                               class="shopping-input" 
+                               id="shoppingInput" 
+                               placeholder="Add grocery item..."
+                               onkeypress="handleShoppingEnter(event)">
+                        <button class="add-item-btn" onclick="addShoppingItem()">Add Item</button>
+                    </div>
+                    
+                    <div class="shopping-list" id="shoppingList">
+                        <!-- Shopping items will be added here -->
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="calc-btn" onclick="clearShoppingList()" style="width: auto; padding: 1rem 2rem;">🗑️ Clear All Items</button>
+                        <button class="calc-btn" onclick="exportShoppingList()" style="width: auto; padding: 1rem 2rem; margin-left: 1rem;">📄 Export List</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nutrition Info Tab -->
+            <div id="nutrition" class="tab-content" role="tabpanel">
+                <h2>🥗 Essential Nutrition Information</h2>
+                
+                <div class="disclaimer">
+                    📋 <strong>Nutrition Note:</strong> Individual nutritional needs vary based on age, gender, activity level, and health conditions. This information is for educational purposes only.
+                </div>
+
+                <div class="nutrition-grid">
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">🍊</div>
+                        <h3>Vitamin C</h3>
+                        <p><strong>Daily Need:</strong> 65-90mg</p>
+                        <p><strong>Sources:</strong> Citrus fruits, berries, bell peppers, broccoli</p>
+                        <p><strong>Benefits:</strong> Immune support, collagen synthesis, antioxidant protection</p>
+                    </div>
+                    
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">🥛</div>
+                        <h3>Calcium</h3>
+                        <p><strong>Daily Need:</strong> 1000-1200mg</p>
+                        <p><strong>Sources:</strong> Dairy products, leafy greens, almonds, sardines</p>
+                        <p><strong>Benefits:</strong> Bone health, muscle function, nerve signaling</p>
+                    </div>
+                    
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">🥩</div>
+                        <h3>Iron</h3>
+                        <p><strong>Daily Need:</strong> 8-18mg</p>
+                        <p><strong>Sources:</strong> Red meat, spinach, lentils, tofu</p>
+                        <p><strong>Benefits:</strong> Oxygen transport, energy production, immune function</p>
+                    </div>
+                    
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">🐟</div>
+                        <h3>Omega-3</h3>
+                        <p><strong>Daily Need:</strong> 250-500mg</p>
+                        <p><strong>Sources:</strong> Fatty fish, walnuts, flaxseeds, chia seeds</p>
+                        <p><strong>Benefits:</strong> Heart health, brain function, inflammation reduction</p>
+                    </div>
+                    
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">🌻</div>
+                        <h3>Vitamin D</h3>
+                        <p><strong>Daily Need:</strong> 600-800 IU</p>
+                        <p><strong>Sources:</strong> Sunlight, fortified foods, fatty fish</p>
+                        <p><strong>Benefits:</strong> Bone health, immune function, mood regulation</p>
+                    </div>
+                    
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">🥜</div>
+                        <h3>Protein</h3>
+                        <p><strong>Daily Need:</strong> 0.8g per kg body weight</p>
+                        <p><strong>Sources:</strong> Meat, fish, eggs, legumes, nuts</p>
+                        <p><strong>Benefits:</strong> Muscle building, tissue repair, enzyme production</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div>
+            <h3>Recette - Your Complete Food & Health Companion</h3>
+            <p>Discover, plan, and enjoy healthy eating with our comprehensive food and nutrition platform.</p>
+            
+            <ul>
+                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#terms">Terms of Service</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#about">About Recette</a></li>
+            </ul>
+            
+            <div class="disclaimer">
+                <strong>Important:</strong> All nutritional information and health calculations are for educational purposes only. Always consult with healthcare professionals for personalized medical advice and before making significant dietary changes.
+            </div>
+            
+            <p>&copy; 2025 Recette. Made with ❤️ for healthy living.</p>
+        </div>
+    </footer>
+
+    </body></html>
